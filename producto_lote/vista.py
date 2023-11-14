@@ -94,7 +94,7 @@ def crear_ventana_registro():
     return w
 
 
-def crear_ventana_actualizacion(dato:producto_lote):
+def crear_ventana_actualizacion(dato:Producto_lote):
     ancho_etiqueta = 25
     ancho_contenido = 55
     # Datos del combobox de unidades, si fuera de un tabla hay que tomarlo de una clase consultas
