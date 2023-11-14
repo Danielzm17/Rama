@@ -17,9 +17,8 @@ def listar_mensajes_errores_actualizacion() -> Tuple[str, ...]:
     return ('Revise SKU',
             'Revise el nombre',
             'Revise la cantidad',
-            'Revise la unidad',
-            'Revise el costo unitario',
-            'Revise el estado')
+            'Revise el precio',
+            'Revise el costo')
 
 
 def validar_condiciones_actualizacion(dato: Producto_lote):
@@ -29,9 +28,8 @@ def validar_condiciones_actualizacion(dato: Producto_lote):
             not utils_validacion.validar_texto_vacio(dato.sku),
             not utils_validacion.validar_texto_vacio(dato.nombre),
             utils_validacion.validar_numero_real(dato.cantidad),
-            not utils_validacion.validar_texto_vacio(dato.unidad),
-            utils_validacion.validar_numero_real(dato.costo_unitario),
-            not utils_validacion.validar_texto_vacio(dato.estado)
+            utils_validacion.validar_numero_real(dato.precio),
+            utils_validacion.validar_numero_real(dato.costo)
         )
         return validacion
     else:
@@ -51,10 +49,8 @@ def listar_mensajes_errores_creacion() -> Tuple[str, ...]:
     return ('Revise SKU',
             'Revise el nombre',
             'Revise la cantidad',
-            'Revise la unidad',
             'Revise el precio',
-            'Revise el costo unitario',
-            'Revise el estado')
+            'Revise el costo')
 
 
 def validar_condiciones_creacion(dato: Producto_lote) -> Optional[Tuple[bool, ...]]:
@@ -62,12 +58,9 @@ def validar_condiciones_creacion(dato: Producto_lote) -> Optional[Tuple[bool, ..
         validacion = (
             not utils_validacion.validar_texto_vacio(dato.sku),
             not utils_validacion.validar_texto_vacio(dato.nombre),
+            utils_validacion.validar_numero_real(dato.costo),
+            utils_validacion.validar_numero_real(dato.precio),
             utils_validacion.validar_numero_real(dato.cantidad),
-            not utils_validacion.validar_texto_vacio(dato.unidad),
-            utils_validacion.validar_numero_real(dato.disponible),
-            utils_validacion.validar_numero_real(dato.reservado),
-            utils_validacion.validar_numero_real(dato.costo_unitario),
-            not utils_validacion.validar_texto_vacio(dato.estado),
             utils_validacion.validar_numero_real(dato.dias_vida_util)
         )
         return validacion
@@ -125,18 +118,11 @@ def procesar(
                 producto = Producto_lote()
                 producto.sku = valores['sku']
                 producto.nombre = valores['nombre']
-                producto.unidad = valores['unidad']
-                producto.costo_unitario = valores['costo-unitario']
-                producto.cantidad = valores['cantidad']
-                producto.disponible = valores['disponible']
-                producto.reservado = valores['reservado']
-                producto.dias_vida_util = valores['dias-vida-util']
-                producto.porcentaje_impuesto = valores['porcentaje-impuesto']
-                producto.monto_utilidad = valores['monto_utilidad']
+                producto.costo = valores['costo']
                 producto.precio = valores['precio']
-                producto.redondeo = valores['redondeo']
-                # Este campo es constante por eso se pone directo al momento de la creación
-                producto.estado = 'activo'
+                producto.cantidad = valores['cantidad']
+                producto.dias_vida_util = valores['dias-vida-util']
+
 
                 if validar_creacion(producto_lote):
                     exito, msg, id = consultas.registrar(conn=conn, dato=producto_lote)
@@ -164,26 +150,10 @@ def procesar(
                 producto_lote.producto_lote_id = valores['id']
                 producto_lote.sku = valores['sku']
                 producto_lote.nombre = valores['nombre']
-                producto_lote.unidad = valores['unidad']
-                producto_lote.costo_unitario = valores['costo-unitario']
-                producto_lote.cantidad = valores['cantidad']
-                producto_lote.disponible = valores['disponible']
-                producto_lote.reservado = valores['reservado']
-                producto_lote.dias_vida_util = valores['dias-vida-util']
-                producto_lote.porcentaje_impuesto = valores['porcentaje-impuesto']
-                producto_lote.monto_utilidad = valores['monto_utilidad']
+                producto_lote.costo = valores['costo']
                 producto_lote.precio = valores['precio']
-                producto_lote.redondeo = valores['redondeo']
-                estado_activo = valores['estado-activo']
-                estado_inactivo = valores['estado-inactivo']
-
-                # Como estado lo recupera de un radiobutton hay que ver el estado de cada botón
-                if estado_activo:
-                    producto_lote.estado = 'activo'
-                elif estado_inactivo:
-                    producto_lote.estado = 'inactivo'
-                else:
-                    producto_lote.estado = ''
+                producto_lote.cantidad = valores['cantidad']
+                producto_lote.dias_vida_util = valores['dias-vida-util']
 
                 if validar_actualizacion(producto_lote):
                     exito, msg, id = consultas.modificar(conn=conn, dato=producto_lote)
