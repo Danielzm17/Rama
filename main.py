@@ -27,6 +27,9 @@ import producto_lote.vista as producto_lote_vista
 import producto_lote_importar.controlador as producto_lote_importar_controlador
 import producto_lote_importar.vista as producto_lote_importar_vista
 
+import producto_lote_reporte.controlador as producto_lote_reporte controlador
+import producto_lote_reporte.vista as producto_lote_reporte_vista
+
 import local.controlador as local_controlador
 import local.vista as local_vista
 import local_importar.vista as local_importar_vista
