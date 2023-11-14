@@ -1,0 +1,12 @@
+.idea/*
+.vscode/*
+.prueba_campo_invisible.py
+__pycache__/*.cpython-*.pyc
+bom/__pycache__/*.cpython-*.pyc
+*/__pycache__/*.cpython-*.pyc
+config/__pycache__/*.cpython-*.pyc
+main/__pycache__/*.cpython-*.pyc
+materia_prima/__pycache__/*.cpython-*.pyc
+producto/__pycache__/*.cpython-*.pyc
+utils/__pycache__/*.cpython-*.pyc
+ii0703.db
