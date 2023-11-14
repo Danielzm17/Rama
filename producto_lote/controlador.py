@@ -1,5 +1,5 @@
 from typing import Tuple, Optional
-import producto_lote.vista as vistas
+import producto_lote.vista as producto_lote_vistas
 import producto_lote.consultas as consultas
 import utils.validaciones as utils_validacion
 import utils.ventana as utils_ventana
@@ -90,7 +90,7 @@ def procesar(
     else:
         if cmd['det'] == 'list':
             if cmd['act'] == 'create':
-                ventana = vistas.crear_ventana_registro()
+                ventana = producto_lote_vistas.crear_ventana_registro()
             elif cmd['act'] == 'update':
                 nombre_tabla = 'evt:{};det:list;act:list'.format(obtener_alias_controlador())
                 data_selected = utils_ventana.obtener_datos_seleccionado_tabla(ventana=ventana_secundaria,
@@ -99,7 +99,7 @@ def procesar(
                 if data_selected:
                     selected = int(data_selected[0][0])
                     dato: Producto_lote = consultas.cargar(conn=conn, id=selected)
-                    ventana = vistas.crear_ventana_actualizacion(dato)
+                    ventana = producto_lote_vistas.crear_ventana_actualizacion(dato)
                 else:
                     psg.popup('No se ha seleccionado un dato', title='Paso obligatorio')
             elif cmd['act'] == 'delete':
@@ -110,7 +110,7 @@ def procesar(
                 if data_selected:
                     selected = int(data_selected[0][0])
                     dato: Producto_lote = consultas.cargar(conn=conn, id=selected)
-                    ventana = vistas.crear_ventana_eliminacion(dato)
+                    ventana = producto_lote_vistas.crear_ventana_eliminacion(dato)
                 else:
                     psg.popup('No se ha seleccionado un dato', title='Paso obligatorio')
         elif cmd['det'] == 'create':

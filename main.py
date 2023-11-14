@@ -22,12 +22,17 @@ import producto_importar.vista as producto_importar_vista
 import producto_reporte.vista as producto_reporte_vista
 import producto_reporte.controlador as producto_reporte_controlador
 
+import producto_lote.controlador as producto_lote_controlador
+import producto_lote.vista as producto_lote_vista
+import producto_lote_importar.controlador as producto_lote_importar_controlador
+import producto_lote_importar.vista as producto_lote_importar_vista
+
 import local.controlador as local_controlador
 import local.vista as local_vista
-import local_importar.controlador as local_importar_controlador
 import local_importar.vista as local_importar_vista
 import local_reporte.vista as local_reporte_vista
 import local_reporte.controlador as local_reporte_controlador
+
 
 import proveedor_reporte.vista as proveedor_reporte_vista
 import proveedor_reporte.controlador as proveedor_reporte_controlador
@@ -122,6 +127,20 @@ def main():
                                                            ventana_auxiliar=aux_window,
                                                            ventana_actual=window)
             elif cmd['evt'] == 'producto_importar':
+                aux_window = producto_importar_controlador.procesar(cmd=cmd,
+                                                           valores=values,
+                                                           conn=conn,
+                                                           ventana_secundaria=secondary_window,
+                                                           ventana_auxiliar=aux_window,
+                                                           ventana_actual=window)
+            elif cmd['evt'] == 'producto_lote':
+                aux_window = producto_controlador.procesar(cmd=cmd,
+                                                           valores=values,
+                                                           conn=conn,
+                                                           ventana_secundaria=secondary_window,
+                                                           ventana_auxiliar=aux_window,
+                                                           ventana_actual=window)
+            elif cmd['evt'] == 'producto_lote_importar':
                 aux_window = producto_importar_controlador.procesar(cmd=cmd,
                                                            valores=values,
                                                            conn=conn,
@@ -247,6 +266,8 @@ def main():
         # MENU: 'Importadores'
         elif event == 'Importar productos':
             secondary_window = producto_importar_vista.crear_ventana_inicio(conn)
+        elif event == 'Importar lotes de productos':
+            secondary_window = producto_lote_importar_vista.crear_ventana_inicio(conn)
         elif event == 'Importar materias primas':
             pass
         elif event == 'Importar BOM':
