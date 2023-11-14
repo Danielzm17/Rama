@@ -26,13 +26,10 @@ def procesar(
     ventana = None
     fecha = datetime.today().isoformat(timespec='minutes')
     fecha = fecha.replace(':', '')
-    campos = ['SKU', 'Nombre', 'Costo unitario', 'Porcentaje impuesto',
-              'Monto impuesto', 'Monto utilidad', 'Precio', 'Redondeo',
-              'Precio final', 'Cantidad', 'Unidad', 'Disponible',
-              'Reservado', 'Estado', 'Días vida útil']
+    campos = ['SKU', 'Nombre', 'Costo', 'Precio', 'Cantidad', 'Días vida útil']
 
     if cmd['evt'] != obtener_alias_controlador():
-        psg.popup_error('Intentando procesar un evento de producto, pero se envió otro evento',
+        psg.popup_error('Intentando procesar un evento de lotes de producto, pero se envió otro evento',
                         'Error de programación')
     else:
         if cmd['det'] == 'plantilla':
@@ -50,7 +47,7 @@ def procesar(
                     ws.column_dimensions[chr(ord('@') + i)].width = len(campos[i - 1]) + 3
 
                 wb.save(nombre_archivo)
-                print("LA GATA ")
+                print("LOTES ")
                 ventana_actual['mensaje-error'].update('Archivo: {}'.format(nombre_archivo))
                 ventana_actual.close()
                 ventana = ventana_secundaria
@@ -67,25 +64,15 @@ def procesar(
                 print(todos_los_sku)
 
                 for row in ws.iter_rows(min_row=2, max_col=len(campos), values_only=True):
-                    sku, nombre, costo, porc_imp, monto_imp, monto_util, precio, redondeo, precio_final, cantidad, unidad, disponible, reservado, estado, vida_util = row
+                    sku, nombre, costo, precio, cantidad, vida_util = row
                     if sku not in todos_los_sku:
-                        print(sku, nombre, costo, porc_imp, monto_imp, monto_util, precio, redondeo, precio_final,
-                              cantidad, unidad, disponible, reservado, estado, vida_util)
+                        print(sku, nombre, costo, precio, cantidad, vida_util)
                         producto_lote = Producto_lote()
                         producto_lote.sku = sku
                         producto_lote.nombre = nombre
                         producto_lote.costo_unitario = costo
-                        producto_lote.porcentaje_impuesto = porc_imp
-                        producto_lote.monto_impuesto = monto_imp
-                        producto_lote.monto_utilidad = monto_util
                         producto_lote.precio = precio
-                        producto_lote.redondeo = redondeo
-                        producto_lote.precio_final = precio_final
                         producto_lote.cantidad = cantidad
-                        producto_lote.unidad = unidad
-                        producto_lote.disponible = disponible
-                        producto_lote.reservado = reservado
-                        producto_lote.estado = estado
                         producto_lote.dias_vida_util = vida_util
                         producto_lote_consultas.registrar(conn=conn, dato=producto_lote)
                     else:
