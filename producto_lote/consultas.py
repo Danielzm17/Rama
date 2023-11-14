@@ -14,31 +14,13 @@ def registrar(conn=None, dato: Producto_lote = None):
         (
             sku,
             nombre,
-            costo_unitario,
-            porcentaje_impuesto,
-            monto_impuesto,
-            monto_utilidad,
+            costo,
             precio,
-            redondeo,
-            precio_final,
             cantidad,
-            unidad,
-            disponible,
-            reservado,
-            estado,
             dias_vida_util
         )
         VALUES
         (
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
             ?,
             ?,
             ?,
@@ -51,9 +33,7 @@ def registrar(conn=None, dato: Producto_lote = None):
     cursor = conn.cursor()
     try:
 
-        valores = (dato.sku, dato.nombre, dato.costo_unitario, dato.porcentaje_impuesto, dato.monto_impuesto,
-                   dato.monto_utilidad, dato.precio, dato.redondeo, dato.precio_final, dato.cantidad,
-                   dato.unidad, dato.disponible, dato.reservado, dato.estado, dato.dias_vida_util)
+        valores = (dato.sku, dato.nombre, dato.costo, dato.precio, dato.cantidad, dato.dias_vida_util)
 
         cursor.execute(sql, valores)
         conn.commit()
@@ -79,18 +59,9 @@ def modificar(conn=None, dato: Producto_lote = None):
         set
             sku = ?,
             nombre = ?,
-            costo_unitario = ?,
-            porcentaje_impuesto = ?,
-            monto_impuesto = ?,
-            monto_utilidad = ?,
+            costo = ?,
             precio = ?,
-            redondeo = ?,
-            precio_final = ?,
             cantidad = ?,
-            unidad = ?,
-            disponible = ?,
-            reservado = ?,
-            estado = ?,
             dias_vida_util = ?
         where
             producto_lote_id = ?;
@@ -98,9 +69,7 @@ def modificar(conn=None, dato: Producto_lote = None):
 
     cursor = conn.cursor()
     try:
-        valores = (dato.sku, dato.nombre, dato.costo_unitario, dato.porcentaje_impuesto, dato.monto_impuesto,
-                   dato.monto_utilidad, dato.precio, dato.redondeo, dato.precio_final, dato.cantidad,
-                   dato.unidad, dato.disponible, dato.reservado, dato.estado, dato.dias_vida_util,dato.producto_lote_id)
+        valores = (dato.sku, dato.nombre, dato.costo, dato.precio, dato.cantidad, dato.dias_vida_util)
 
         cursor.execute(sql, valores)
         conn.commit()
@@ -152,8 +121,7 @@ def cargar_tabla(conn=None):
     listado = list(filter(filtro, listado))
 
     salida = [(
-        dato.producto_lote_id, dato.sku, dato.nombre, dato.cantidad, dato.disponible, dato.reservado, dato.unidad,
-        dato.costo_unitario, dato.estado, dato.dias_vida_util) for dato in listado]
+        dato.sku, dato.nombre, dato.costo, dato.precio, dato.cantidad, dato.dias_vida_util) for dato in listado]
 
     return salida
 
@@ -167,18 +135,9 @@ def listar_todos(conn=None) -> List[Producto_lote]:
         sku,
         nombre,
         fecha_registro,
-        costo_unitario,
-        porcentaje_impuesto,
-        monto_impuesto,
-        monto_utilidad,
+        costo,
         precio,
-        redondeo,
-        precio_final,
         cantidad,
-        unidad,
-        disponible,
-        reservado,
-        estado,
         dias_vida_util
     from 
         producto_lote
@@ -198,18 +157,9 @@ def listar_por_sku_nombre(conn, sku, nombre) -> List[Producto_lote]:
         sku,
         nombre,
         fecha_registro,
-        costo_unitario,
-        porcentaje_impuesto,
-        monto_impuesto,
-        monto_utilidad,
+        costo,
         precio,
-        redondeo,
-        precio_final,
         cantidad,
-        unidad,
-        disponible,
-        reservado,
-        estado,
         dias_vida_util
     from 
         producto_lote
@@ -234,18 +184,9 @@ def cargar(conn=None, id=-1) -> Producto_lote:
         sku,
         nombre,
         fecha_registro,
-        costo_unitario,
-        porcentaje_impuesto,
-        monto_impuesto,
-        monto_utilidad,
+        costo,
         precio,
-        redondeo,
-        precio_final,
         cantidad,
-        unidad,
-        disponible,
-        reservado,
-        estado,
         dias_vida_util
     from 
         producto_lote
@@ -266,17 +207,8 @@ def convertir_dict_en_objeto(datos: Dict) -> Producto_lote:
     objeto.sku = datos['sku']
     objeto.nombre = datos['nombre']
     objeto.fecha_registro = datos['fecha_registro']
-    objeto.costo_unitario = datos['costo_unitario']
-    objeto.porcentaje_impuesto = datos['porcentaje_impuesto']
-    objeto.monto_impuesto = datos['monto_impuesto']
-    objeto.monto_utilidad = datos['monto_utilidad']
+    objeto.costo = datos['costo']
     objeto.precio = datos['precio']
-    objeto.redondeo = datos['redondeo']
-    objeto.precio_final = datos['precio_final']
     objeto.cantidad = datos['cantidad']
-    objeto.unidad = datos['unidad']
-    objeto.disponible = datos['disponible']
-    objeto.reservado = datos['reservado']
-    objeto.estado = datos['estado']
     objeto.dias_vida_util = datos['dias_vida_util']
     return objeto
