@@ -12,8 +12,7 @@ def obtener_etiqueta_mensaje() -> str:
 def crear_ventana_inicio(conn=None):
 
 
-    encabezado = ['Id', 'SKU', 'Nombre', 'Cantidad', 'Disponible', 'Reservado', 'Unidad',
-                  'Costo Un.','Estado','Vida útil']
+    encabezado = ['Id', 'SKU', 'Nombre', 'Costo', 'Precio', 'Cantidad','Vida útil']
 
     data_values = list(cargar_tabla(conn))
 
@@ -67,52 +66,21 @@ def crear_ventana_registro():
             psg.Text('Nombre', size=(ancho_etiqueta, 1)),
             psg.Input(key='nombre', size=(ancho_contenido, 1), expand_x=True)
         ],
-
         [
-            psg.Text('Unidades', size=(ancho_etiqueta, 1)),
-            psg.Combo(unidades, key='unidad', size=(10, 1), readonly=True, default_value=unidades[0],
-                      expand_x=True)
-        ],
-        [
-            psg.Text('Cantidad', size=(ancho_etiqueta, 1)),
-            psg.Input(key='cantidad', expand_x=True)
-        ],
-        [
-            psg.Text('Disponible', size=(ancho_etiqueta, 1)),
-            psg.Input(key='disponible', expand_x=True)
-        ],
-        [
-            psg.Text('Reservado', size=(ancho_etiqueta, 1)),
-            psg.Input(key='reservado', expand_x=True),
-
-        ],
-        [
-            psg.Text('Días de vida útil', size=(ancho_etiqueta, 1)),
-            psg.Input(key='dias-vida-util', expand_x=True),
-        ],
-        [
-            psg.Text('Costo unitario', size=(ancho_etiqueta, 1)),
-            psg.Input(key='costo-unitario', size=(ancho_contenido, 1), expand_x=True)
-        ],
-        [
-            psg.Text('Porcentaje impuesto', size=(ancho_etiqueta, 1)),
-            psg.Input(key='porcentaje-impuesto', size=(ancho_contenido, 1), expand_x=True)
-        ],
-        [
-            psg.Text('Monto utilidad', size=(ancho_etiqueta, 1)),
-            psg.Input(key='monto_utilidad', size=(ancho_contenido, 1), expand_x=True)
+            psg.Text('Costo', size=(ancho_etiqueta, 1)),
+            psg.Input(key='costo', size=(ancho_contenido, 1), expand_x=True)
         ],
         [
             psg.Text('Precio', size=(ancho_etiqueta, 1)),
             psg.Input(key='precio', size=(ancho_contenido, 1), expand_x=True)
         ],
         [
-            psg.Text('Redondeo', size=(ancho_etiqueta, 1)),
-            psg.Input(key='redondeo', size=(ancho_contenido, 1), expand_x=True)
+            psg.Text('Cantidad', size=(ancho_etiqueta, 1)),
+            psg.Input(key='cantidad', expand_x=True)
         ],
         [
-            psg.Text('Estado', key='estado-lbl', size=(ancho_etiqueta, 1)),
-            psg.Radio('Activo', 'estado', default=True, key='estado-activo', expand_x=True),
+            psg.Text('Días de vida útil', size=(ancho_etiqueta, 1)),
+            psg.Input(key='dias-vida-util', expand_x=True),
         ],
         crear_botones_aceptar_cancelar(obtener_alias_controlador(),'Registrar {}'.format(obtener_etiqueta_mensaje()),'create','ok')
     ]
@@ -146,56 +114,21 @@ def crear_ventana_actualizacion(dato:producto_lote):
             psg.Text('Nombre', size=(ancho_etiqueta, 1)),
             psg.Input(key='nombre', size=(ancho_contenido, 1), expand_x=True, default_text=dato.nombre)
         ],
-
         [
-            psg.Text('Unidades', size=(ancho_etiqueta, 1)),
-            psg.Combo(unidades, key='unidad', size=(10, 1), readonly=True,
-                      expand_x=True, default_value=dato.unidad)
-        ],
-        [
-            psg.Text('Cantidad', size=(ancho_etiqueta, 1)),
-            psg.Input(key='cantidad', expand_x=True, default_text=dato.cantidad)
-        ],
-        [
-            psg.Text('Disponible', size=(ancho_etiqueta, 1)),
-            psg.Input(key='disponible', expand_x=True, default_text=dato.disponible)
-        ],
-        [
-            psg.Text('Reservado', size=(ancho_etiqueta, 1)),
-            psg.Input(key='reservado', expand_x=True, default_text=dato.reservado)
-        ],
-        [
-            psg.Text('Días de vida útil', size=(ancho_etiqueta, 1)),
-            psg.Input(key='dias-vida-util', expand_x=True, default_text=dato.dias_vida_util)
-        ],
-        [
-            psg.Text('Costo unitario', size=(ancho_etiqueta, 1)),
-            psg.Input(key='costo-unitario', size=(ancho_contenido, 1), expand_x=True, default_text=dato.costo_unitario)
-        ],
-        [
-            psg.Text('Porcentaje impuesto', size=(ancho_etiqueta, 1)),
-            psg.Input(key='porcentaje-impuesto', size=(ancho_contenido, 1), expand_x=True, default_text=dato.porcentaje_impuesto)
-        ],
-        [
-            psg.Text('Monto utilidad', size=(ancho_etiqueta, 1)),
-            psg.Input(key='monto_utilidad', size=(ancho_contenido, 1), expand_x=True, default_text=dato.monto_utilidad)
+            psg.Text('Costo', size=(ancho_etiqueta, 1)),
+            psg.Input(key='costo', size=(ancho_contenido, 1), expand_x=True, default_text=dato.costo_unitario)
         ],
         [
             psg.Text('Precio', size=(ancho_etiqueta, 1)),
             psg.Input(key='precio', size=(ancho_contenido, 1), expand_x=True, default_text=dato.precio)
         ],
         [
-            psg.Text('Redondeo', size=(ancho_etiqueta, 1)),
-            psg.Input(key='redondeo', size=(ancho_contenido, 1), expand_x=True, default_text=dato.redondeo)
+            psg.Text('Cantidad', size=(ancho_etiqueta, 1)),
+            psg.Input(key='cantidad', expand_x=True, default_text=dato.cantidad)
         ],
         [
-            psg.Text('Estado', key='estado-lbl', size=(ancho_etiqueta, 1)),
-            psg.Radio('Activo', 'estado', default=dato.estado == 'activo', key='estado-activo', expand_x=True),
-            psg.Radio('Inactivo', 'estado', default=dato.estado == 'inactivo', key='estado-inactivo', expand_x=True)
-        ],
-        [
-            psg.Text('Fecha creación', key='creacion-lbl', size=(ancho_etiqueta, 1)),
-            psg.Text(dato.fecha_registro, key='creacion', expand_x=True)
+            psg.Text('Días de vida útil', size=(ancho_etiqueta, 1)),
+            psg.Input(key='dias-vida-util', expand_x=True, default_text=dato.dias_vida_util)
         ],
         crear_botones_aceptar_cancelar(obtener_alias_controlador(), 'Modificar {}'.format(obtener_etiqueta_mensaje()), 'update', 'ok')
     ]
@@ -227,10 +160,6 @@ def crear_ventana_eliminacion(dato:Producto_lote):
         [
             psg.Text('Nombre', size=(ancho_etiqueta, 1)),
             psg.Text(dato.nombre, key='nombre', size=(ancho_contenido, 1), expand_x=True)
-        ],
-        [
-            psg.Text('Fecha creación', key='creacion-lbl', size=(ancho_etiqueta, 1)),
-            psg.Text(dato.fecha_registro, key='creacion', expand_x=True)
         ],
         [
             psg.Button('', tooltip='Eliminar', expand_x=True,
